@@ -26,7 +26,7 @@ public class Reporter implements Runnable {
             catch (final InterruptedException ignored) {}
             int toGo = EchoClient.THREADS;
             for (final EchoClient client : EchoClient.clients) {
-                final int idx = client.i;
+                final int idx = client.round;
                 if (client.exit) {
                     toGo--;
                 }
@@ -38,7 +38,7 @@ public class Reporter implements Runnable {
                     client.checkedCount = 0;
                 }
                 if (client.checkedCount >= 10) {
-                    System.out.println("!!! Test-Client-" + client.threadId + " seems to be stuck at [round: " + client.i + ", pos: "
+                    System.out.println("!!! Test-Client-" + client.threadId + " seems to be stuck at [round: " + client.round + ", pos: "
                             + client.pos + ", size: " + client.size + "].");
                 }
             }

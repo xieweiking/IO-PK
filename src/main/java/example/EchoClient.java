@@ -35,7 +35,7 @@ public class EchoClient extends ArgsSupport implements Runnable {
 
     private final Socket socket;
     final int threadId;
-    int i = 0, size, pos, lastCheckIdx = 0, checkedCount = 0;
+    int round = 0, size, pos, lastCheckIdx = 0, checkedCount = 0;
     boolean exit;
 
     EchoClient(final String host, final int port, final int i) throws Exception {
@@ -56,34 +56,37 @@ public class EchoClient extends ArgsSupport implements Runnable {
         try {
             out = this.socket.getOutputStream();
             in = this.socket.getInputStream();
-            for (; System.currentTimeMillis() < end; ++i) {
+            for (; System.currentTimeMillis() < end; ++round) {
                 final String x = createRandomString();
                 final byte[] buf = x.getBytes();
-                size = buf.length;
-                pos = 0;
-                out.write(buf);
-                out.flush();
-                int r;
-                while (size > 0 && (r = in.read(buf, pos, size)) > 0) {
-                    pos += r;
-                    size -= r;
-                    recvCount.addAndGet(r);
+                this.size = buf.length;
+                this.pos = 0;
+                while (this.pos < this.size) {
+                    int len = 1024;
+                    if (this.pos + len > this.size) {
+                        len = this.size - this.pos;
+                    }
+                    out.write(buf, this.pos, len);
+                    out.flush();
+                    in.read(buf, this.pos, len);
+                    this.pos += len;
+                    recvCount.addAndGet(len);
                 }
                 final String y = new String(buf);
                 if (!x.equals(y)) {
-                    System.err.println("Bad Echo! @Test-Client-" + this.threadId + ", round-" + i);
+                    System.err.println("Bad Echo! @Test-Client-" + this.threadId + ", round-" + round);
                     System.err.println("x: " + x);
                     System.err.println("y: " + y);
                     System.exit(1);
                 }
-                try { Thread.sleep(1L+RAND.nextInt(9)); }
+                try { Thread.sleep(1L+RAND.nextInt(19)); }
                 catch (final InterruptedException ignored) {}
             }
             out.write((byte)-1);
             out.flush();
         }
         catch (final Exception ex) {
-            System.err.println("Error @Thread-" + this.threadId + ", count-" + i);
+            System.err.println("Error @Test-Client-" + this.threadId + ", round-" + round);
             ex.printStackTrace();
         }
         finally {

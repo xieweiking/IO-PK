@@ -31,6 +31,13 @@
 			</includes>
 		</fileSet>
 		<fileSet>
+			<directory>lib/mipsel</directory>
+			<outputDirectory>IO-PK/lib/mipsel</outputDirectory>
+			<includes>
+				<include>*.so</include>
+			</includes>
+		</fileSet>
+		<fileSet>
 			<directory>bin</directory>
 			<outputDirectory>IO-PK/bin</outputDirectory>
 			<includes>

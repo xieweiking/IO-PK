@@ -5,7 +5,7 @@ rem set JAVA_HOME variable here.
 rem set JAVA_HOME=your_java_home_dir
 
 rem set JVM_OPTS variable here.
-set JVM_OPTS=-server -Xms64m -Xmx128m -XX:PermSize=64m -XX:MaxPermSize=128m
+set JVM_OPTS=-server -Xms512m -Xmx512m -XX:PermSize=64m -XX:MaxPermSize=128m
 
 :HELP
 if "%1" == "help" goto START_HELP

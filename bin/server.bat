@@ -9,7 +9,7 @@ cd ..
 set SERVER_HOME=%CD%
 cd %OLD_PATH%
 rem set JVM_OPTS variable here.
-set JVM_OPTS=-server -Xms64m -Xmx128m -XX:PermSize=64m -XX:MaxPermSize=128m -Dexample.server.home=%SERVER_HOME%
+set JVM_OPTS=-server -Xms512m -Xmx512m -XX:PermSize=64m -XX:MaxPermSize=128m -Dexample.server.home=%SERVER_HOME%
 
 :HELP
 if "%1" == "help" goto START_HELP

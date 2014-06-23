@@ -4,7 +4,7 @@
 # JAVA_HOME=your_java_home_dir
 
 # set JVM_OPTS variable here.
-JVM_OPTS="-server -Xms64m -Xmx128m -XX:PermSize=64m -XX:MaxPermSize=128m"
+JVM_OPTS="-server -Xms512m -Xmx512m -XX:PermSize=64m -XX:MaxPermSize=128m"
 
 if [ "$1" = "-help" ] ; then
     STATUS_MODE="HELP"
